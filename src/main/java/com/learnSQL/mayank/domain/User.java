@@ -1,22 +1,24 @@
 package com.learnSQL.mayank.domain;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
+@Table(name = "user")
 @EntityListeners(AuditingEntityListener.class)
 public class User {
 	
@@ -26,6 +28,8 @@ public class User {
 	private Integer id;
 	
 	@Column(name = "user_name")
+	@NotNull
+	@NotEmpty
 	private String userName;
 	
 	@Column(name = "user_password")
@@ -38,6 +42,9 @@ public class User {
 	@Column(name = "user_updated_on")
 	@LastModifiedBy
 	private String lastUpdated;
+	
+	@OneToMany(mappedBy="user")
+	private List<Address> address;
 
 	public Integer getId() {
 		return id;
@@ -71,9 +78,22 @@ public class User {
 		this.createdDate = createdDate;
 	}
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", userName=" + userName + ", password=" + password + "]";
+	public String getLastUpdated() {
+		return lastUpdated;
 	}
+
+	public void setLastUpdated(String lastUpdated) {
+		this.lastUpdated = lastUpdated;
+	}
+
+	public List<Address> getAddress() {
+		return address;
+	}
+
+	public void setAddress(List<Address> address) {
+		this.address = address;
+	}
+
+
 	
 }
