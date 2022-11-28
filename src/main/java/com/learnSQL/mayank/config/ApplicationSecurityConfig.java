@@ -45,6 +45,8 @@ public class ApplicationSecurityConfig {
 
         http.csrf().disable().cors().disable().authorizeHttpRequests()
         	.antMatchers("/authorize/**").permitAll()
+        	.antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
+        	.antMatchers("/user/**").hasAuthority("ROLE_USER")
             .anyRequest().authenticated()
             .and()
             .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)

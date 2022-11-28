@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 import com.learnSQL.mayank.domain.User;
 
 @Repository
-public interface UserRepository extends CrudRepository<User, Integer>{
+public interface UserRepository extends CrudRepository<User, Long> {
 
-	Optional<User> findByUserName(String userName);
+	Optional<User> findByEmail(String email);
 
 }

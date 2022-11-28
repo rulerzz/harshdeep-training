@@ -18,41 +18,41 @@ public class Address {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private int id;
-	
+	private Long id;
+
 	@Column(name = "address_locality")
 	@NotNull
 	@NotEmpty
 	private String locality;
-	
+
 	@Column(name = "address_area")
 	@NotNull
 	@NotEmpty
 	private String area;
-	
+
 	@Column(name = "address_landmark")
 	@NotNull
 	@NotEmpty
 	private String landmark;
-	
+
 	@Column(name = "address_pincode")
 	@NotNull
 	@NotEmpty
 	private String pinCode;
-	
+
 	@Column(name = "address_city")
 	@NotNull
 	@NotEmpty
 	private String city;
-	
+
 	@ManyToOne
-    @JoinColumn(name="user_id", nullable=false)
-    private User user;
-    
+	@JoinColumn(name = "user_id", nullable = false)
+	private User user;
+
 	public Address() {
 		super();
 	}
-	
+
 	public Address(@NotNull @NotEmpty String locality, @NotNull @NotEmpty String area,
 			@NotNull @NotEmpty String landmark, @NotNull @NotEmpty String pinCode, @NotNull @NotEmpty String city,
 			User user) {
@@ -65,12 +65,11 @@ public class Address {
 		this.user = user;
 	}
 
-	
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -113,4 +112,14 @@ public class Address {
 	public void setCity(String city) {
 		this.city = city;
 	}
+
+	@Override
+	public String toString() {
+		return "Address [id=" + id + ", locality=" + locality + ", area=" + area + ", landmark=" + landmark
+				+ ", pinCode=" + pinCode + ", city=" + city + ", user=" + user + ", getId()=" + getId()
+				+ ", getLocality()=" + getLocality() + ", getArea()=" + getArea() + ", getLandmark()=" + getLandmark()
+				+ ", getPinCode()=" + getPinCode() + ", getCity()=" + getCity() + ", getClass()=" + getClass()
+				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+	}
+
 }

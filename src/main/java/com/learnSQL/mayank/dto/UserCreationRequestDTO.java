@@ -8,16 +8,31 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserCreationRequestDTO {
-	public String userName;
+
+	private Long id;
+
+	public String firstName;
 
 	public List<AddressDto> addresses;
 
-	public String getUserName() {
-		return userName;
+	private String lastName;
+
+	private String email;
+
+	public Long getId() {
+		return id;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
 	public List<AddressDto> getAddresses() {
@@ -28,4 +43,21 @@ public class UserCreationRequestDTO {
 		this.addresses = addresses;
 	}
 
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	
 }

@@ -1,105 +1,45 @@
-package com.learnSQL.mayank.domain;
+package com.learnSQL.mayank.dto;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import com.learnSQL.mayank.domain.Address;
+import com.learnSQL.mayank.domain.Role;
 
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-@Entity
-@Table(name = "user")
-@EntityListeners(AuditingEntityListener.class)
-public class User implements UserDetails{
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+public class UserDto {
 	private Long id;
 
-	@NotNull
-	@NotEmpty
 	private String firstName;
 
-	@NotNull
-	@NotEmpty
 	private String lastName;
 
-	@NotNull
-	@NotEmpty
 	private String email;
 
-	@NotNull
-	@NotEmpty
 	private String password;
 
-	@Column(name = "status")
 	private boolean enabled;
 
 	private boolean tokenExpired;
 
-	@CreatedDate
 	private String createdDate;
 
-	@LastModifiedBy
 	private String lastUpdated;
 
-	@OneToMany(mappedBy = "user")
 	private List<Address> address;
 
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "users_roles", 
-			joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), 
-			inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	private Collection<Role> roles;
-	
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		Set<GrantedAuthority> authorities = new HashSet<>();
-        for (var r : this.roles) {
-            var authority = new SimpleGrantedAuthority(r.getName());
-            authorities.add(authority);
-        }
-        return authorities;
-	}
 
-	@Override
-	public String getUsername() {
-		return this.email;
-	}
-
-	@Override
-	public boolean isAccountNonExpired() {
-		 return true;
-	}
-
-	@Override
-	public boolean isAccountNonLocked() {
-		 return true;
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		 return true;
+	public UserDto(Long id, String firstName, String lastName, String email, List<Address> address,
+			Collection<Role> roles, boolean tokenExpired, String createdDate, String lastUpdated) {
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.address = address;
+		this.roles = roles;
+		this.tokenExpired = tokenExpired;
+		this.createdDate = createdDate;
+		this.lastUpdated = lastUpdated;
 	}
 
 	public Long getId() {
@@ -181,7 +121,7 @@ public class User implements UserDetails{
 	public void setAddress(List<Address> address) {
 		this.address = address;
 	}
-	
+
 	public Collection<Role> getRoles() {
 		return roles;
 	}
@@ -192,7 +132,7 @@ public class User implements UserDetails{
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+		return "UserDto [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
 				+ ", password=" + password + ", enabled=" + enabled + ", tokenExpired=" + tokenExpired
 				+ ", createdDate=" + createdDate + ", lastUpdated=" + lastUpdated + ", address=" + address + ", roles="
 				+ roles + ", getId()=" + getId() + ", getFirstName()=" + getFirstName() + ", getLastName()="
@@ -202,7 +142,5 @@ public class User implements UserDetails{
 				+ getRoles() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
 				+ super.toString() + "]";
 	}
-
-
 
 }
